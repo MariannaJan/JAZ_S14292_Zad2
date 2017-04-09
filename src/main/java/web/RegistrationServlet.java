@@ -18,39 +18,16 @@ import repositories.LoginApplicationRepository;
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-private LoginApplicationRepository repo;
 	
-	public void init(ServletConfig config){
-		repo = new DummyLoginApplication();
-	}
        
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
-		String registeringUser = (String) request.getAttribute("username");
-		response.getWriter().println(""+registeringUser);
-		
-    	/*if(!(registeringUser.equals("")) && (!repo.ifUserExists(registeringUser))){
-    		
-    		LoginApplication application = retreiveDetailsFromRequest(request);
-    		repo.register(application);
-    		response.sendRedirect("login.jsp");
-    		
-    	}
-    	else {
-    		response.getWriter().println("Already registered. Please log in.");
-    	}*/
-    	
-		
-		
-		
-		
-		
+		LoginApplicationRepository repo= new DummyLoginApplication();
+		LoginApplication application = retreiveDetailsFromRequest(request);
+		repo.register(session,application.getUsername(),response);		
 	}
 
-	
-	
 	private LoginApplication retreiveDetailsFromRequest(HttpServletRequest request){
 		LoginApplication result = new LoginApplication();
 		result.setUsername(request.getParameter("username"));

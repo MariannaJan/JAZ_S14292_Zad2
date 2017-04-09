@@ -18,28 +18,18 @@ public class LoginServlet extends HttpServlet {
   	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
   		
   		
-  		String username = request.getParameter("username");
-  		String password = request.getParameter("password");
   		
-  		DummyLoginApplication repo = new DummyLoginApplication();
+  		
+  		LoginApplicationRepository repo = new DummyLoginApplication();
+  		//HttpSession session = request.getSession();
   		  		
   		if (repo.getSize()>0){
   			
-  			if (password.equals((repo.getApplicationByUsername(username)).getPassword())){
-  				
-  				HttpSession session = request.getSession();
-  	  	  		
-  	  	  		session.setAttribute("username", username);
-  	  	  		session.setAttribute("password", password);
-  	  	  		
-  	  	  	response.sendRedirect("profile");
-  	  	  		
-  			}
-  			else response.sendRedirect("login.jsp");			
+  			repo.login(request, response);			
   			
   		}
   		else
-				response.sendRedirect("reg.jsp");
+			response.sendRedirect("reg.jsp");
   					
 	}
 
