@@ -4,18 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>Premium Page</title>
 </head>
 <body>
-<h1>Please enter Your details:</br></h1>
-<form action="login" method="get">
-<table>
-<tr><td>Username: </td><td><input type="text"  name="username"/></td></tr>
-<tr><td>Password: </td><td><input type="text"  name="password"/></td></tr>
-<tr><td><input type="submit" value="Log in"/></td><td></td></tr>
-</table>
-</form>
+
+<h1>This is premium page!!!</h1> </br>
+
+<a href="/ProfileServlet">Go to profile page</a>
 </br>
 <a href="/index.jsp">Home</a>
+
 </body>
 </html>

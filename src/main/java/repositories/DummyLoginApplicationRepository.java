@@ -10,36 +10,47 @@ import javax.servlet.http.HttpSession;
 
 import domain.LoginApplication;
 
-public class DummyLoginApplication implements LoginApplicationRepository {
+public class DummyLoginApplicationRepository implements LoginApplicationRepository {
 
 	private static List<LoginApplication> db = new ArrayList<LoginApplication>();
 	
 	@Override
-	public void register(HttpSession session, String registeringUser, HttpServletResponse response) throws IOException {
-		
-		
-		for(LoginApplication application: db){	
-    	if(!(registeringUser.equals("")) && (db.indexOf(registeringUser)==-1)){
-    		db.add(application);
-    		response.sendRedirect("login.jsp");
-    	   	}
-    	else if(registeringUser.equals(""))response.sendRedirect("reg.jsp");
-    	
-    	else {
-    		response.sendRedirect("login.jsp");
-    	}
-		}
-	}
+	public void register(LoginApplication application) throws IOException {
+			db.add(application);
+    }
 	
 	@Override
-	public void login(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		String username = request.getParameter("username");
-  		String password = request.getParameter("password");
-  		
-  		for (LoginApplication la:db){
-  			if(username.equals(la.getUsername())&& password.equals(la.getPassword())){
-  				response.sendRedirect("profil");
+	public void login(HttpSession session, String username, String password) throws IOException{
+		
+		if (username.equals("Admin")&& password.equals("admin")){
+			session.setAttribute("logged", "true");
+			session.setAttribute("username", username);
+			session.setAttribute("admin", "adminYes");
+			session.setAttribute("premium", "premiumYes");
+		}
+		
+		else {
+		
+  		for (LoginApplication application: db){
+  			if(application.getUsername().equals(username) && application.getPassword().equals(password)){
+  				session.setAttribute("logged", "true");
+  				session.setAttribute("username", username);
+  				session.setAttribute("password", password);
+  				
+  				if (application.getPremium().equals("premiumYes")){
+  					session.setAttribute("premium", "premiumYes");
+  				}
+  				else {
+  					 session.setAttribute("premium", "premiumNo");
+  				}
+  				
   			}
+  			else {
+  				session.setAttribute("logged", "false");
+  				session.setAttribute("premium", "premiumNo");
+  				session.setAttribute("admin", "adminNo");
+  			}
+  		}	
   		}
   		
 	}
@@ -59,11 +70,11 @@ public class DummyLoginApplication implements LoginApplicationRepository {
 	}
 
 
-	
-	public String profilePage() {
-		String profileText="";
+	@Override
+	public String summaryPage() {
+		String summaryText="";
 		if (!db.isEmpty()){
-			profileText+= "<tr>"
+			summaryText+= "<table border='1'><tr>"
 					+ "<td>Login</td>"
 					+ "<td>Password</td>"
 					+ "<td>E-mail</td>"
@@ -71,8 +82,7 @@ public class DummyLoginApplication implements LoginApplicationRepository {
 					+ "<td>Admin</td>"
 					+ "</tr>";
 		  for (LoginApplication la: db) {
-			  profileText+= "<tr>"
-						+ "<td>la"
+			  summaryText+= "<tr>"				
 						+ "<td>"+la.getUsername()+"</td>"
 						+ "<td>"+la.getPassword()+"</td>"
 						+ "<td>"+la.getEmail()+"</td>"
@@ -80,9 +90,40 @@ public class DummyLoginApplication implements LoginApplicationRepository {
 						+ "<td>"+la.getAdmin()+"</td>"
 						+ "</tr>";
 		  }
-		  profileText+= "/table";
+		  summaryText+= "</table>";
 		}
-		return profileText;
+		return summaryText;
+	}
+	
+	@Override
+	public void setPremium(String username){
+		if (!username.equals("")){
+			for(LoginApplication application: db){
+				if(application.getUsername().equals(username)){
+					application.setPremium("premiumYes");
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void removePremium(String username){
+		for(LoginApplication application: db){
+			if(application.getUsername().equals(username)){
+				application.setPremium("premiumNo");
+			}
+		}
+	}
+	
+	@Override
+	public String getPremiumStatus(String username){
+		String premiumStatus = "";
+		for(LoginApplication application: db){
+			if(application.getUsername().equals(username)){
+				premiumStatus= application.getPremium();
+			}
+		}
+		return premiumStatus;
 	}
 
 	

@@ -5,8 +5,8 @@ public class LoginApplication {
 	String username;
 	String email;
 	String password;
-	Boolean premium;
-	Boolean admin;
+	String premium = "premiumNo";
+	String admin = "adminNo";
 	
 	public String getUsername() {
 		return username;
@@ -31,19 +31,19 @@ public class LoginApplication {
 		this.password=password;
 	}
 	
-	public Boolean getPremium(){
+	public String getPremium(){
 		return premium;
 	}
 	
-	public void setPremium(Boolean premium){
+	public void setPremium(String premium){
 		this.premium=premium;
 	}
 	
-	public Boolean getAdmin(){
+	public String getAdmin(){
 		return admin;
 	}
 	
-	public void setAdmin(Boolean admin){
+	public void setAdmin(String admin){
 		this.admin=admin;
 	}
 }

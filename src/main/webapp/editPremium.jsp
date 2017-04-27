@@ -4,17 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Registration form</title>
+<title>Edit Premium</title>
 </head>
 <body>
-<h1>Please enter Your details:</br></h1>
-<form action="reg" method="get">
+
+<h1>Please choose username to edit premium:</br></h1>
+<form action="PremiumEditServlet" method="get">
 <table>
 <tr><td>Username: </td><td><input type="text"  name="username"/></td></tr>
-<tr><td>Password: </td><td><input type="text"  name="password"/></td></tr>
-<tr><td>Confirm password: </td><td><input type="text" name="confpassword"/></td></tr>
-<tr><td>Email: </td><td><input type="text" name="email"/></td></tr>
-<tr><td><input type="submit" value="Register"/></td><td></td></tr>
+<tr><td><input type="submit" value="Toggle Premium"/></td><td></td></tr>
 </table>
 </form>
 

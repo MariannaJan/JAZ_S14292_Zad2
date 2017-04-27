@@ -11,7 +11,21 @@
 <table>
 <tr>
 <td><a href="/login.jsp">Login</a></td>
+</tr>
+<tr>
 <td><a href="/reg.jsp">Register</a></td>
+ </tr>
+  <tr>
+<td><a href="/ProfileServlet">Profile Page</a></td>
+ </tr>
+ <tr>
+<td><a href="/premium.jsp">Access Premium Page</a></td>
+ </tr>
+ <tr>
+<td><a href="/SummaryServlet">Access Summary Page</a></td>
+ </tr>
+  <tr>
+<td><a href="/editPremium.jsp">Access Premium Edit Page</a></td>
  </tr>
 </table>
 </body>

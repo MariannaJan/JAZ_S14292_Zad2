@@ -15,9 +15,16 @@ public interface LoginApplicationRepository {
 	int getSize();
 	
 	
-	void login(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	void login(HttpSession session, String username, String password) throws IOException;
 
-	void register(HttpSession session, String registeringUser, HttpServletResponse response) throws IOException;
+	void register(LoginApplication application) throws IOException;
 	
+	public String summaryPage();
+
+	void setPremium(String username);
+
+	void removePremium(String username);
+
+	String getPremiumStatus(String username);
 	
 }

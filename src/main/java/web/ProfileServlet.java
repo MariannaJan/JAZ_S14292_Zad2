@@ -11,30 +11,32 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import domain.LoginApplication;
-import repositories.DummyLoginApplication;
+import repositories.DummyLoginApplicationRepository;
 import repositories.LoginApplicationRepository;
 
 
-@WebServlet("/profile")
+@WebServlet("/ProfileServlet")
 public class ProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	   
  	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		LoginApplicationRepository repo= new DummyLoginApplication();
+		LoginApplicationRepository repo= new DummyLoginApplicationRepository();
 		
-		
-		String profileUser = repo.getApplicationByUsername((String) session.getAttribute("username")).getUsername();
-		String profilePass = repo.getApplicationByUsername((String) session.getAttribute("username")).getPassword();
-		String profileEmail = repo.getApplicationByUsername((String) session.getAttribute("username")).getEmail();
-		
-		
+			
+		String username=(String)session.getAttribute("username");
+		String password=(String)session.getAttribute("password");
+		String premium=(String)session.getAttribute("premium");
 		response.setContentType("text/html");
-		response.getWriter().println("<h1>Profile page of:  "+profileUser+"</h1></br>");
-		response.getWriter().println("Password:  "+profilePass+"</br>");
-		response.getWriter().println("Password:  "+profileEmail+"</br>");
+		response.getWriter().print("You are: "+username);
+		response.getWriter().print("</br>Your password is: "+password);
+		response.getWriter().print("</br>Your premium status is: "+premium);
+		
+		response.getWriter().print("</br><a href='/index.jsp'>Home</a>");
+		
 	}
+	
 
 	
 	}

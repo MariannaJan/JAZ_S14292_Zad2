@@ -11,21 +11,34 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import domain.LoginApplication;
-import repositories.DummyLoginApplication;
+import repositories.DummyLoginApplicationRepository;
 import repositories.LoginApplicationRepository;
 
 @WebServlet("/reg")
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	
-       
-  
+	  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		LoginApplicationRepository repo= new DummyLoginApplication();
-		LoginApplication application = retreiveDetailsFromRequest(request);
-		repo.register(session,application.getUsername(),response);		
+		if (session.getAttribute("logged")==null || session.getAttribute("logged").equals(false)) {
+			LoginApplication application = retreiveDetailsFromRequest(request);
+			LoginApplicationRepository repo = new DummyLoginApplicationRepository();
+			response.setContentType("text/html");
+			if (!application.getUsername().equals("") && !application.getPassword().equals("") && !application.getEmail().equals("") && request.getParameter("password").equals(request.getParameter("confpassword"))){
+				//session.setAttribute("registration", application);
+				session.setAttribute("premium", "premiumNo");
+				session.setAttribute("admin", "adminNo");
+				repo.register(application);
+				response.getWriter().print("Thank you for registering</br>");
+				response.getWriter().print("<a href='/login.jsp'>Please log in");
+			}
+			else {
+				response.sendRedirect("/");
+			}
+		}
+		else {
+			response.getWriter().print("You are already logged in. No need of registration!");
+		}
 	}
 
 	private LoginApplication retreiveDetailsFromRequest(HttpServletRequest request){
