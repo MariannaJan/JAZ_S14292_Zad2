@@ -17,12 +17,17 @@ import repositories.LoginApplicationRepository;
 @WebServlet("/reg")
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private LoginApplicationRepository repo;
+	
+	public void init(ServletConfig config) throws ServletException {
+		repo = new DummyLoginApplicationRepository();
+	}
 	  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("logged")==null || session.getAttribute("logged").equals(false)) {
 			LoginApplication application = retreiveDetailsFromRequest(request);
-			LoginApplicationRepository repo = new DummyLoginApplicationRepository();
+			//LoginApplicationRepository repo = new DummyLoginApplicationRepository();
 			response.setContentType("text/html");
 			if (!application.getUsername().equals("") && !application.getPassword().equals("") && !application.getEmail().equals("") && request.getParameter("password").equals(request.getParameter("confpassword"))){
 				//session.setAttribute("registration", application);

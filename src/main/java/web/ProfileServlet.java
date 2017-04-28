@@ -18,11 +18,17 @@ import repositories.LoginApplicationRepository;
 @WebServlet("/ProfileServlet")
 public class ProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private LoginApplicationRepository repo;
+	
+	public void init(ServletConfig config) throws ServletException {
+		repo = new DummyLoginApplicationRepository();
+	} 
 	   
  	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		LoginApplicationRepository repo= new DummyLoginApplicationRepository();
+		//LoginApplicationRepository repo= new DummyLoginApplicationRepository();
 		
 			
 		String username=(String)session.getAttribute("username");
